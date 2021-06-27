@@ -1,21 +1,42 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+
+// Navigation
+import { createStackNavigator } from "@react-navigation/stack";
+import { NavigationContainer } from "@react-navigation/native";
+import Tabs from "./src/navigation/tabs";
+
+// Theme
+import { AppearanceProvider, useColorScheme } from "react-native-appearance";
+import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+
+const Stack = createStackNavigator();
+
+// Components
+// import QRScanner from "./src/components/QR";
+
+// Views
+
+// import Home from "./src/screens/Home";
+import { Home, Login, Recipe } from "./src/screens";
 
 export default function App() {
+
+  const scheme = useColorScheme();
+  console.log(scheme)
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AppearanceProvider>
+      <NavigationContainer theme={ scheme === "dark"? DarkTheme: DefaultTheme }>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+          initialRouteName={"Login"}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Recipe" component={Recipe} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppearanceProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

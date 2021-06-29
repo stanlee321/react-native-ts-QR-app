@@ -47,7 +47,7 @@ const CustomButton = ({
         <Text
           style={{
             textAlign: "center",
-            color: "red",
+            color: "white",
             // ...FONTS.h2,
             fontSize: SIZES.h2, lineHeight: 30 
 

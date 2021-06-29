@@ -57,7 +57,7 @@ const Login = ({ navigation }: any) => {
               buttonText="Login"
               buttonContainerStyle={styles.login}
               colors={[COLORS.darkGreen, COLORS.lime]}
-              onPress={() => console.log("Goint to Home")}
+              onPress={() => navigation.replace("Home")}
             />
 
             {/* Sign up */}

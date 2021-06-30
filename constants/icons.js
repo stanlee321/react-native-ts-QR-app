@@ -26,6 +26,9 @@ const sugar = require("../assets/icons/sugar.png")
 const shrimp = require("../assets/icons/shrimp.png")
 const tomato = require("../assets/icons/tomato.png")
 
+const qr = require("../assets/icons/qr.png")
+const cam = require("../assets/icons/camera.png")
+
 export default {
     bookmark,
     bookmarkFilled,
@@ -54,4 +57,6 @@ export default {
     pepper,
     salt,
     sugar,
+    cam,
+    qr
 }

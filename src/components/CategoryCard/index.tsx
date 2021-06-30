@@ -6,6 +6,38 @@ import { View, TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import { COLORS, FONTS, SIZES } from '../../../constants';
 
 const CategoryCard = ({containerStyle, categoryItem, onPress}:any) => {
+
+    const itemStatus = (categoryItem:any)=>{
+        if (categoryItem.isBookmark){
+            return <View style={{
+                backgroundColor: COLORS.darkGreen,
+                width: 60,
+                marginLeft:15,
+                height:25,
+                borderRadius: 60,
+                alignItems:'center',
+                justifyContent: 'center'
+                }}>
+                <Text style={{ color: COLORS.white}}>
+                    Ingreso
+                </Text>
+            </View>
+        }else {
+            return <View style={{
+                backgroundColor: "rgba(255,0,0,0.2)",
+                width: 60,
+                height:25,
+                marginLeft:15,
+                justifyContent: 'center',
+                borderRadius: 60,
+                alignItems:'center'
+                }}>
+            <Text style={{ color: COLORS.black,}}>
+                Sacó
+            </Text>
+        </View>
+        }
+    }
     return (
         <TouchableOpacity
             style={styles(containerStyle).touchable}
@@ -21,7 +53,13 @@ const CategoryCard = ({containerStyle, categoryItem, onPress}:any) => {
                 {/* Name */}
                 <Text style={styles(containerStyle).textName}>{categoryItem.name}</Text>
                 {/* Serving */}
-                <Text style={styles(containerStyle).textServing} > {categoryItem.duration} | {categoryItem.serving} Serving </Text>
+                    <Text style={styles(containerStyle).textServing} > {categoryItem.duration} |</Text> 
+                <View style={{flex:1 , flexDirection:'row'}}>
+                    <Text>
+                        {categoryItem.serving}
+                    </Text>
+                    {itemStatus(categoryItem)}
+                </View>
             </View>
         </TouchableOpacity>
     )

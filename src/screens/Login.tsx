@@ -21,7 +21,7 @@ const Login = ({ navigation }: any) => {
     return (
       <View style={styles.header}>
         <ImageBackground
-          source={images.loginBackground}
+          source={images.newLoginBackground}
           style={styles.imageStyle}
           resizeMode="cover"
         >
@@ -32,7 +32,7 @@ const Login = ({ navigation }: any) => {
             style={styles.linearGradient}
           >
             <Text style={styles.titleText}>
-              Cooking a Delicius Food Exchange
+              Inventarios
             </Text>
           </LinearGradient>
         </ImageBackground>
@@ -45,8 +45,7 @@ const Login = ({ navigation }: any) => {
         <View style={{flex:1, paddingHorizontal: SIZES.padding}}>
             {/* Description */}
             <Text style={styles.textDescription}>
-              Discover more than 200 food recipes in you hands and cooking it
-              eastly!
+              Herramienta para el manejo de Inventarios
             </Text>
 
              {/* Buttons */}
@@ -107,7 +106,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     // fontFamily: "RobotoBlack",
     fontSize: SIZES.largeTitle,
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
+    // backgroundColor: "rgba(0, 0, 0, 0.6)",
     //   ...FONTS.largeTitle,
     lineHeight: 45,
   },

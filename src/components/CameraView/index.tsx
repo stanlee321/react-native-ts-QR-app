@@ -18,23 +18,24 @@ import { FontAwesome } from "@expo/vector-icons";
 
 
 // Constants
-import { COLORS, SIZES } from '../../constants'
+import { COLORS, SIZES } from '../../../constants'
 
-const Settings = () => {
+const CameraView = ( { setUrl, setShowCamera, setError }: any) => {
   // Cam ref
-
   const camRef = useRef<any>(null);
 
   const [hasPermission, setHasPermission] = useState<any>(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
-  const [capturedPhoto, setCapturedPhoto] = useState<any>(null);
-  const [open, setOpen] = useState<any>(null);
+
+  const [open, setOpen] = useState<any>(false);
+
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
       setHasPermission(status === "granted");
     })();
+
   }, []);
 
   if (hasPermission === null) {
@@ -46,10 +47,19 @@ const Settings = () => {
 
   async function takePicture() {
     if (camRef) {
-      const data = await camRef.current.takePictureAsync();
-      console.log(data)
-      setCapturedPhoto(data);
-      setOpen(true)
+      camRef.current.takePictureAsync().then((data)=> {
+        setOpen(true)
+        setUrl(data.uri)
+        
+        setShowCamera(false)
+        setError(false)
+        console.log(data.uri)
+
+      }).catch( (e)=> {
+        console.log(e)
+        setError(true)
+      });
+
     }
   }
 
@@ -79,7 +89,7 @@ const Settings = () => {
         </View>
 
       </Camera>
-
+{/* 
       {
           capturedPhoto && 
           <Modal
@@ -101,7 +111,7 @@ const Settings = () => {
               </View>
 
           </Modal>
-      }
+      } */}
     </SafeAreaView>
   );
 };
@@ -153,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Settings;
+export default CameraView;

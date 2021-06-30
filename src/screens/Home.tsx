@@ -5,11 +5,15 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
 
 // Constants
-import { COLORS, dummyData, SIZES, FONTS, images, icons } from '../../constants' 
+import { COLORS, dummyDataTools, SIZES, FONTS, images, icons } from '../../constants' 
 
 // Components
 import CategoryCard from '../components/CategoryCard';
 import TrendingCard from '../components/TrendingCard';
+
+const dummyData = dummyDataTools
+// dummyDataTools
+
 
 const Home = ({navigation}:any) => {
 
@@ -21,7 +25,7 @@ const Home = ({navigation}:any) => {
                 <View style={ { flex:1 } }>
                     <Text style={styles.headerTextName}
                     >
-                        Hola Filemon,
+                        Hola Fernando,
                     </Text>
                     <Text style={styles.headerTextSub}>
                         Estos son los items del dia de hoy
@@ -32,7 +36,7 @@ const Home = ({navigation}:any) => {
                     onPress= {()=> console.log("PROFILE")}
                 >
                     <Image
-                        source= {images.profile}
+                        source= {images.UserProfile1}
                         style={styles.headerProfileImage}
                     />
 
@@ -190,13 +194,18 @@ const Home = ({navigation}:any) => {
                             <View>
                                 {/* Header */}
                                 { renderHeader() }
+
                                 {/* Search Bar */}
                                 { renderSearchBar()}
 
                                 {/* See Recipe Card */}
-                                { renderSeeRecipesCard()}
-                                {/* Trending Section */}
-                                {renderTrendingSecction()}
+
+                                { /* { renderSeeRecipesCard()} */  }
+
+                                { /* Trending Section */ }
+
+                                {/* { renderTrendingSecction() } */}
+
                                 {/* Category Header */}
 
                             </View>
@@ -245,7 +254,8 @@ const styles = StyleSheet.create({
     },
     headerTextName: {
         color: COLORS.darkGreen,
-        fontSize: SIZES.h2, lineHeight: 30
+        fontSize: SIZES.h2, lineHeight: 30,
+        fontWeight: "bold",
     },
     headerTextSub: {
         marginTop: 3,

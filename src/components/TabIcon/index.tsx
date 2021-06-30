@@ -11,7 +11,6 @@ interface Props {
 }
 
 const TabIcon = ( {focused, icon }: Props) => {
-    console.log("COFUS", focused)
     return (
         <View style={styles(focused).view}>
             <Image source={icon}
@@ -38,6 +37,7 @@ const styles = (focused:boolean) => StyleSheet.create({
         height: 30,
         tintColor: (focused)? COLORS.darkGreen: COLORS.lightLime,
     },
+
     imageView: {
         position: 'absolute', 
         left: 0,

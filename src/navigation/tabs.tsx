@@ -3,14 +3,18 @@ import {  StyleSheet } from "react-native";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+import { FontAwesome } from "@expo/vector-icons";
+
+
 // Views
-import { Home, Settings, QRScanner, Recipe } from "../screens"
+import { Home, Settings, QRScanner, Recipe, Form } from "../screens"
 
 // Constants
 import { icons } from "../../constants";
 
 // Components
 import TabIcon from '../components/TabIcon';
+
 
 const Tab = createBottomTabNavigator()
 
@@ -28,23 +32,23 @@ const Tabs = () => {
                 name="QRScanner"
                 component={QRScanner}
                 options={{
-                    tabBarIcon: ({focused}) => <TabIcon focused={focused} icon = {icons.search} />
+                    tabBarIcon: ({focused}) => <TabIcon focused={focused} icon = {icons.qr} />
                 }}
             />
             <Tab.Screen
-                name="Bookmark"
-                component={Recipe}
+                name="Form"
+                component={Form}
                 options={{
-                    tabBarIcon: ({focused}) => <TabIcon focused={focused} icon = {icons.bookmark} />
+                    tabBarIcon: ({focused}) => <TabIcon focused={focused} icon = {icons.cam} />
                 }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="Settings"
                 component={Settings}
                 options={{
                     tabBarIcon: ({focused}) => <TabIcon focused={focused} icon = {icons.settings} />
                 }}
-            />
+            /> */}
         </Tab.Navigator>
     )
 }
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
         elevation: 0,
         backgroundColor: 'white',
         borderTopColor: 'transparent',
-        height: 100
+        height: 80
     }
 })
 

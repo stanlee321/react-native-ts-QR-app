@@ -60,7 +60,7 @@ const RecipeCreatorCardDetail = ({ selectedRecipe }: any) => {
             lineHeight: 22,
           }}
         >
-          Recipe by:
+          Encargado/Responsable:
         </Text>
         <Text
           style={{ color: COLORS.white2, fontSize: SIZES.h3, lineHeight: 22 }}
@@ -149,14 +149,14 @@ const Recipe = ({ navigation, route }: any) => {
                   flex:1,
                   fontSize: SIZES.h3, lineHeight: 22
               }}>
-                  Ingredients
+                  Personal que saco este item:
               </Text>
 
               <Text style={{
                   color: COLORS.lightGray2,
                   fontSize: SIZES.body4, lineHeight: 22
               }}>
-                  {selectedRecipe?.ingredients.length} items
+                  {selectedRecipe?.ingredients.length} Veces
               </Text>
 
           </View>
@@ -188,8 +188,16 @@ const Recipe = ({ navigation, route }: any) => {
                             fontSize: SIZES.h2, lineHeight: 30
                         }}
                     >
-                        {selectedRecipe?.name}
+                        Ultimo Holder
                     </Text>
+                    
+                    {/* <Text
+                        style={{
+                            fontSize: SIZES.h2, lineHeight: 30
+                        }}
+                    >
+                        {selectedRecipe?.name}
+                    </Text> */}
                     <Text
                         style={{
                             marginTop:5,
@@ -276,7 +284,7 @@ const Recipe = ({ navigation, route }: any) => {
                         color: COLORS.lightGray2, fontSize: SIZES.body4, lineHeight: 22
                     }}
                 >
-                    Recipe by:
+                    Encargado/Responsable:
                 </Text>
                 <Text style={{color: COLORS.white2,  fontSize: SIZES.h3, lineHeight: 22 }}>
                     {selectedRecipe?.author?.name}
@@ -397,12 +405,6 @@ const Recipe = ({ navigation, route }: any) => {
   return (
     <View>
       {/* Adjust the tint and intensity */}
-      <BlurView
-        intensity={100}
-        style={[StyleSheet.absoluteFill, styles.nonBlurredContent]}
-      >
-        <Text>Hello! I am bluring contents underneath</Text>
-      </BlurView>
       <Animated.FlatList
         data={selectedRecipe?.ingredients}
         keyExtractor={(item) => `${item.id}`}
@@ -447,6 +449,7 @@ const Recipe = ({ navigation, route }: any) => {
                 style={{
                   height: 40,
                   width: 40,
+                  borderRadius:40
                 }}
               />
             </View>

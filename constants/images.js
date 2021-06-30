@@ -1,4 +1,7 @@
 const loginBackground = require("../assets/images/system/login-background.png")
+const newLoginBackground = require("../assets/images/system/new-login-background.jpg")
+const close = require("../assets/images/system/close.png")
+const ok = require("../assets/images/system/ok.png")
 
 const recipe = require("../assets/images/recipes/recipe.png")
 const spagetti = require("../assets/images/recipes/spagetti.png")
@@ -18,7 +21,18 @@ const UserProfile8 = require("../assets/images/dummy_profiles/profile-pic-8.png"
 const UserProfile9 = require("../assets/images/dummy_profiles/profile-pic-9.png")
 const UserProfile10 = require("../assets/images/dummy_profiles/profile-pic-10.png")
 
+const defaultImage = require("../assets/images/dummy_profiles/default_image.jpg")
+
+
+// tools
+const tool1 = require("../assets/images/tools/hammer.jpg")
+const tool2 = require("../assets/images/tools/items.png")
+const tool3 = require("../assets/images/tools/items2.jpg")
+const tool4 = require("../assets/images/tools/items3.jpg")
+
+
 export default {
+    newLoginBackground,
     loginBackground,
     profile,
     recipe,
@@ -27,6 +41,12 @@ export default {
     laksa,
     nasiLemak,
 
+    //tools
+    tool1,
+    tool2,
+    tool3,
+    tool4,
+    
     UserProfile1,
     UserProfile2,
     UserProfile3,
@@ -37,4 +57,9 @@ export default {
     UserProfile8,
     UserProfile9,
     UserProfile10,
+
+    defaultImage,
+
+    close,
+    ok
 }

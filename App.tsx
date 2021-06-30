@@ -35,6 +35,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Tabs} />
           <Stack.Screen name="Recipe" component={Recipe} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </AppearanceProvider>

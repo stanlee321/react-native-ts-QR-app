@@ -267,5 +267,6 @@ const categories = trendingRecipes
 
 export default {
     trendingRecipes,
-    categories
+    categories,
+    
 }

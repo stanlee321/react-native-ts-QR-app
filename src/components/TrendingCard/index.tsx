@@ -17,10 +17,10 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }:any) => {
     return (
         <TouchableOpacity
             style={{
-                height: 350,
-                width: 250,
+                height: 100,
+                width: 100,
                 marginTop: SIZES.radius,
-                marginRight: 20,
+                marginRight: 10,
                 borderRadius: SIZES.radius,
                 ...containerStyle
             }}
@@ -29,11 +29,14 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }:any) => {
         >
             {/* Background Image */}
             <Image
-                source={recipeItem.image}
+                //source={recipeItem.uri}
+
+                source={{ uri: recipeItem.uri }}
+
                 resizeMode="cover"
                 style={{
-                    width:250,
-                    height: 350,
+                    width: 100,
+                    height: 100,
                     borderRadius: SIZES.radius
                 }}
             >
@@ -53,14 +56,14 @@ const TrendingCard = ({ containerStyle, recipeItem, onPress }:any) => {
                 }}
             >
 
-                <Text
+                {/* <Text
                     style={{
                         color: COLORS.white,
                         fontSize: SIZES.h4, lineHeight: 22 
                     }}
                 >
                     {recipeItem.category}
-                </Text>
+                </Text> */}
 
 
             </View>

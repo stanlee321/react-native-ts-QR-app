@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   View,
@@ -16,15 +16,23 @@ import {
 
 import useInput from "../hooks/useInput";
 
-import { SIZES, COLORS, images } from "../../constants";
+import { SIZES, COLORS, images, dummyData } from "../../constants";
 
 import { FontAwesome } from "@expo/vector-icons";
-
 
 import CameraView from "../components/CameraView";
 
 import ModalPopup from "../components/ModalPopup";
+import { FlatList } from "react-native-gesture-handler";
+import TrendingCard from "../components/TrendingCard";
 
+interface IImage {
+  uri: string;
+  id: number;
+}
+interface IImages {
+  data: IImage[];
+}
 
 const Form = ({ navigation }: any) => {
   const [inputItemText, inputItemComponent] = useInput({
@@ -64,15 +72,41 @@ const Form = ({ navigation }: any) => {
   });
   // setTaskItems([...taskItems, task]);
 
-  const [url, setUrl] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState<any>(null);
   const [showCamera, setShowCamera] = useState(false);
   const [error, setError] = useState(false);
-  const [showModal, setShowModal ] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
+  const [actualImages, setActualImages] = useState<IImages>();
+  /// { data: [{ uri: images.defaultImage, id: 0 }], }
+  const [imageInView, setImageInView] = useState<IImage>();
+
+  // Control initial render for search do not triger
+  const initial = React.useRef(true);
+
+  useEffect(() => {
+    if (initial.current) {
+      initial.current = false;
+      return;
+    }
+
+    if (actualImages) {
+      setActualImages((prev) => ({
+        data: [...prev.data, { uri: imageUrl, id: prev.data.length + 1 }],
+      }));
+      setImageInView({ uri: imageUrl, id: actualImages.data.length + 1 });
+      return;
+    }
+
+    setActualImages({
+      data: [ { uri: imageUrl, id: 1 }],
+    });
+    setImageInView({ uri: imageUrl, id: 0 });
+
+  }, [imageUrl]);
 
   const handleAddTask = () => {
     Keyboard.dismiss();
-    console.log(inputItemText);
   };
 
   function renderHeader() {
@@ -120,9 +154,11 @@ const Form = ({ navigation }: any) => {
         {/* Background Image */}
         <Image
           source={
-
-            (url===null)? images.defaultImage:{uri: url}
-          } 
+            actualImages ? { uri: imageInView.uri } : images.defaultImage
+            // imageInView === null
+            //   ? images.defaultImage
+            //   :
+          }
           resizeMode="cover"
           style={{
             width: 250,
@@ -148,30 +184,47 @@ const Form = ({ navigation }: any) => {
   }
 
   if (showCamera) {
-    return <CameraView setUrl={setUrl} setShowCamera={setShowCamera} setError={setError} />;
+    return (
+      <CameraView
+        setUrl={setImageUrl}
+        setShowCamera={setShowCamera}
+        setError={setError}
+      />
+    );
   } else {
     return (
       <View style={styles.container}>
         {/* Modal */}
         <ModalPopup visible={showModal}>
-          <View style={{
-            alignItems:'center'
-          }}>
-            <TouchableOpacity style={styles.headerModal} onPress={()=>setShowModal(false)}>
-              <Image source={images.close} style ={{height:30, width: 30}} ></Image>
+          <View
+            style={{
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              style={styles.headerModal}
+              onPress={() => setShowModal(false)}
+            >
+              <Image
+                source={images.close}
+                style={{ height: 30, width: 30 }}
+              ></Image>
             </TouchableOpacity>
-            
-            <View style={{alignItems:'center'}}>
-              <Image 
+
+            <View style={{ alignItems: "center" }}>
+              <Image
                 source={images.ok}
-                style={{height:150, width:150, marginVertical:10}}
+                style={{ height: 150, width: 150, marginVertical: 10 }}
               />
             </View>
 
-            <Text style={{marginVertical: 30, fontSize:20, textAlign:'center'}} > Datos enviados Correctamente!!!</Text>
-
+            <Text
+              style={{ marginVertical: 30, fontSize: 20, textAlign: "center" }}
+            >
+              {" "}
+              Datos enviados Correctamente!!!
+            </Text>
           </View>
-
         </ModalPopup>
         {/* Headers */}
         {renderHeader()}
@@ -179,20 +232,46 @@ const Form = ({ navigation }: any) => {
         <ScrollView
           contentContainerStyle={{
             marginBottom: 1,
-            paddingTop:10,
-            paddingVertical:100,
+            paddingTop: 10,
+            paddingVertical: 100,
           }}
           keyboardShouldPersistTaps="handled"
           style={{ flex: 1 }}
         >
+          {/*  Pic Photo */}
+
           <View style={{ flex: 1, alignItems: "center", paddingBottom: 20 }}>
             {drawPicHeader()}
 
-            {error? <h1>ERROR trying to PIC, try again</h1>:<></>}
-
+            {error ? <h1>ERROR trying to PIC, try again</h1> : <></>}
           </View>
-          {/*  Pic Photo */}
 
+          {/* Horizontal Selection */}
+
+          {actualImages ? (
+            <View>
+              <FlatList
+                data={actualImages.data}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item) => `${item.id}`}
+                renderItem={({ item, index }) => {
+                  return (
+                    <TrendingCard
+                      containerStyle={{
+                        marginLeft: index == 0 ? SIZES.h1 : SIZES.h2,
+                        padding: 0,
+                      }}
+                      recipeItem={item}
+                      onPress={() =>
+                        setImageInView({ uri: item.uri, id: item.id })
+                      }
+                    />
+                  );
+                }}
+              />
+            </View>
+          ) : null}
           {inputItemComponent()}
 
           <View
@@ -215,7 +294,7 @@ const Form = ({ navigation }: any) => {
               paddingRight: 30,
               paddingTop: 10,
             }}
-          > 
+          >
             <TouchableOpacity onPress={() => setShowModal(true)}>
               <View style={styles.addWrapper}>
                 <Text style={styles.addText}>+</Text>
@@ -298,12 +377,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  headerModal : {
-    width: '100%',
+  headerModal: {
+    width: "100%",
     height: 40,
-    alignItems: 'flex-end',
-    justifyContent: 'center'
-  }
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
 });
 
 export default Form;

@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 // Views
 
 // import Home from "./src/screens/Home";
-import { Home, Login, Recipe } from "./src/screens";
+import { Home, Login, Recipe, FormSecondScreen } from "./src/screens";
 
 export default function App() {
 
@@ -35,6 +35,7 @@ export default function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Tabs} />
           <Stack.Screen name="Recipe" component={Recipe} />
+          <Stack.Screen name="FormSecondScreen" component={FormSecondScreen} />
 
         </Stack.Navigator>
       </NavigationContainer>

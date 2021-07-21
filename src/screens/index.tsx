@@ -4,7 +4,7 @@ import Recipe from "./Recipe";
 import Settings from "./Settings";
 import QRScanner from './QRScanner';
 import Form from './Form';
-
+import FormSecondScreen from './FormSecondScreen';
 
 export {
     Login,
@@ -13,4 +13,5 @@ export {
     Settings,
     QRScanner,
     Form,
+    FormSecondScreen
 }

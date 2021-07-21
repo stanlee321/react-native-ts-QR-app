@@ -5322,6 +5322,11 @@ react-native-screens@~3.0.0:
   resolved "https://registry.npmjs.org/react-native-screens/-/react-native-screens-3.0.0.tgz"
   integrity sha512-35II5oxTaVp3OP8y0eLPOPpQkxG4fRKQ+dL1YSE1we5kCZFOU0l/Rn0T79HbyUu1LPwUZr6lZupPs0ULnRyMuQ==
 
+react-native-select-dropdown@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-select-dropdown/-/react-native-select-dropdown-1.0.9.tgz#3df0f0c42d63a59101ac958f02ad154756f6e5ac"
+  integrity sha512-0MtM3lO6ntc8tmRs6lqT3JiPAZadecn336/3QN1DsB8FJAfpKdWiBk0a2/3gITOjUIQoQLrK+6IghHae6Ef6OA==
+
 react-native-web@~0.13.12:
   version "0.13.18"
   resolved "https://registry.npmjs.org/react-native-web/-/react-native-web-0.13.18.tgz"

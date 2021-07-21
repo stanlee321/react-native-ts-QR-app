@@ -272,35 +272,49 @@ const Form = ({ navigation }: any) => {
               />
             </View>
           ) : null}
-          {inputItemComponent()}
+          
+          {/* Horizontal Selection */}
+          <View style={{
+            flex: 1,
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            padding: SIZES.radius,
+            margin: 20,
+            }}>
+              <Text style={{paddingLeft: 50, fontSize:30 }} >
+                {/* Text */}
+                N° 34
+              </Text>
+              <View style={{ flex:1 ,
+                flexDirection: "column" ,
+                marginLeft:40,
+                }}>
+                <Text  style={{
+                  paddingRight: 25,
+                  fontWeight: "bold"
+                  }}>
+                  {/* Text */}
+                  Detalle
+                </Text>
+                <Text  style={{ fontSize:30  }}>
+                  {/* Text */}
+                  Cable Enchaquetado
+                </Text>
+              </View>
 
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-            }}
-          >
-            {inputStateComponent()}
-            {inputQuantityComponent()}
+
           </View>
-          {/* Comment */}
-          {inputCommentComponent()}
 
-          {/* Send Button */}
-          <View
-            style={{
-              flex: 1,
-              alignItems: "flex-end",
-              paddingRight: 30,
-              paddingTop: 10,
-            }}
-          >
-            <TouchableOpacity onPress={() => setShowModal(true)}>
+         
+          {/* <TouchableOpacity onPress={() => setShowModal(true)}> */}
+          <TouchableOpacity onPress = {() => navigation.navigate("FormSecondScreen", { recipe: ""} )}>
               <View style={styles.addWrapper}>
                 <Text style={styles.addText}>+</Text>
               </View>
+              
             </TouchableOpacity>
-          </View>
+
         </ScrollView>
       </View>
     );

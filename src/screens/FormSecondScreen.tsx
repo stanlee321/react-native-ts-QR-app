@@ -20,12 +20,19 @@ import {
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 
-
-
 // Custom Hooks
 import { useInputForm } from "../hooks/useInputForm";
 import { useInputFormSimple } from "../hooks/useInputFormSimple";
+
+
+// Custom Components Library
 import { FlatList } from "react-native-gesture-handler";
+
+
+// Component
+
+import Header from '../components/Header';
+
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"];
 
@@ -34,24 +41,31 @@ const FormSecondScreen = ({ navigation }: any) => {
     title: "Material 🗜️",
     placeholder: "Escriba el material...",
     dropDownData: countries,
+    keyboardType: "default"
   });
 
   const [textMedida, MedidaInputForm] = useInputForm({
     title: "Medida 📐",
     placeholder: "Escriba la medida...",
     dropDownData: countries,
+    keyboardType: "default"
+
   });
 
   const [textMarca, MarcaInputForm] = useInputForm({
     title: "Marca ℹ️",
     placeholder: "Escriba la marca...",
     dropDownData: countries,
+    keyboardType: "default"
+
   });
 
   const [textDestino, DestinoInputForm] = useInputForm({
     title: "Destino 🛣️",
     placeholder: "Escriba el destino...",
     dropDownData: countries,
+    keyboardType: "default"
+
   });
 
   const [textSection, SectionInputForm] = useInputFormSimple({
@@ -72,33 +86,10 @@ const FormSecondScreen = ({ navigation }: any) => {
     keyboardType: "default",
   });
 
-  function renderHeader() {
-    return (
-      <View style={styles.header}>
-        {/* Text */}
-        <View style={{ flex: 1 }}>
-          <Text style={styles.headerTextName}>Solicitud de Requerimiento</Text>
-          <Text style={styles.headerTextSub}>Fecha: 2020-03-31</Text>
-        </View>
-        {/* Steps */}
-
-        <View style={{ flex: 1, flexDirection: "column" }}>
-          <Text
-            style={{
-              padding: 10,
-              fontSize: SIZES.h1,
-            }}
-          >
-            Paso 2 / 3
-          </Text>
-        </View>
-      </View>
-    );
-  }
 
   return (
     <SafeAreaView style={styles.area}>
-      {renderHeader()}
+      <Header title = "Solicitud de Requerimiento" datetime="2020 14 de Julio, 20:00 Hrs." stateTitle="Paso 2 / 3"/>
       <FlatList
         data={[]}
         keyExtractor={(item) => `${item.id}`}
@@ -152,6 +143,9 @@ const FormSecondScreen = ({ navigation }: any) => {
       />
       {/* <TouchableOpacity onPress={() => setShowModal(true)}> */}
       <TouchableOpacity
+
+      onPress = {() => navigation.navigate("FormThirdScreen", { recipe: ""} )}
+
         style={{
           borderWidth: 1,
           borderColor: "rgba(0,0,0,0.2)",
@@ -163,7 +157,6 @@ const FormSecondScreen = ({ navigation }: any) => {
           right: 10,
           height: 70,
           backgroundColor: "#01a699",
-          
           borderRadius: 100,
         }}
       >
@@ -188,25 +181,7 @@ const styles = StyleSheet.create({
   footer: {
     marginBottom: 20,
   },
-  // Header
-  header: {
-    flexDirection: "row",
-    marginHorizontal: SIZES.padding,
-    alignItems: "center",
-    height: 80,
-  },
-  headerTextName: {
-    color: COLORS.darkGreen,
-    fontSize: SIZES.h2,
-    lineHeight: 30,
-    fontWeight: "bold",
-  },
-  headerTextSub: {
-    marginTop: 3,
-    color: COLORS.gray,
-    fontSize: SIZES.body3,
-    lineHeight: 22,
-  },
+
 
   addWrapper: {
     width: 60,

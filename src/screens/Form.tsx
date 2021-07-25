@@ -4,13 +4,8 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   ScrollView,
-  KeyboardAvoidingView,
   TouchableOpacity,
-  Platform,
-  Keyboard,
-  SafeAreaView,
   Image,
 } from "react-native";
 
@@ -26,6 +21,8 @@ import ModalPopup from "../components/ModalPopup";
 import { FlatList } from "react-native-gesture-handler";
 import TrendingCard from "../components/TrendingCard";
 
+// Hooks 
+
 interface IImage {
   uri: string;
   id: number;
@@ -35,41 +32,7 @@ interface IImages {
 }
 
 const Form = ({ navigation }: any) => {
-  const [inputItemText, inputItemComponent] = useInput({
-    type: "default",
-    title: "Item name",
-    boxSize: 350,
-    boxHeight: 60,
-    fontSize: 16,
-    borderRadius: 60,
-  });
 
-  const [quantity, inputQuantityComponent] = useInput({
-    type: "default",
-    title: "Quantity",
-    boxSize: 100,
-    boxHeight: 60,
-    fontSize: 16,
-    borderRadius: 60,
-  });
-
-  const [state, inputStateComponent] = useInput({
-    type: "default",
-    title: "Estado",
-    boxSize: 130,
-    boxHeight: 60,
-    fontSize: 16,
-    borderRadius: 60,
-  });
-
-  const [comment, inputCommentComponent] = useInput({
-    type: "default",
-    title: "Comentario",
-    boxSize: 350,
-    boxHeight: 120,
-    fontSize: 8,
-    borderRadius: 15,
-  });
   // setTaskItems([...taskItems, task]);
 
   const [imageUrl, setImageUrl] = useState<any>(null);
@@ -83,6 +46,8 @@ const Form = ({ navigation }: any) => {
 
   // Control initial render for search do not triger
   const initial = React.useRef(true);
+
+  //const [ setShowModal, ModalComponent] = useModal()
 
   useEffect(() => {
     if (initial.current) {
@@ -105,9 +70,41 @@ const Form = ({ navigation }: any) => {
 
   }, [imageUrl]);
 
-  const handleAddTask = () => {
-    Keyboard.dismiss();
-  };
+
+  function renderModal(){
+    return(
+      <ModalPopup visible={showModal}>
+      <View
+        style={{
+          alignItems: "center",
+        }} >
+        <TouchableOpacity
+          style={styles.headerModal}
+          onPress={() => setShowModal(false)}
+        >
+          <Image
+            source={images.close}
+            style={{ height: 30, width: 30 }}
+          ></Image>
+        </TouchableOpacity>
+
+        <View style={{ alignItems: "center" }}>
+          <Image
+            source={images.ok}
+            style={{ height: 150, width: 150, marginVertical: 10 }}
+          />
+        </View>
+
+        <Text
+          style={{ marginVertical: 30, fontSize: 20, textAlign: "center" }}
+        >
+          {" "}
+          Datos enviados Correctamente!!!
+        </Text>
+      </View>
+    </ModalPopup>
+    )
+  }
 
   function renderHeader() {
     return (
@@ -182,6 +179,7 @@ const Form = ({ navigation }: any) => {
       </View>
     );
   }
+  
 
   if (showCamera) {
     return (
@@ -195,37 +193,7 @@ const Form = ({ navigation }: any) => {
     return (
       <View style={styles.container}>
         {/* Modal */}
-        <ModalPopup visible={showModal}>
-          <View
-            style={{
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity
-              style={styles.headerModal}
-              onPress={() => setShowModal(false)}
-            >
-              <Image
-                source={images.close}
-                style={{ height: 30, width: 30 }}
-              ></Image>
-            </TouchableOpacity>
-
-            <View style={{ alignItems: "center" }}>
-              <Image
-                source={images.ok}
-                style={{ height: 150, width: 150, marginVertical: 10 }}
-              />
-            </View>
-
-            <Text
-              style={{ marginVertical: 30, fontSize: 20, textAlign: "center" }}
-            >
-              {" "}
-              Datos enviados Correctamente!!!
-            </Text>
-          </View>
-        </ModalPopup>
+        { renderModal() }
         {/* Headers */}
         {renderHeader()}
 
@@ -306,16 +274,35 @@ const Form = ({ navigation }: any) => {
 
           </View>
 
-         
+          
           {/* <TouchableOpacity onPress={() => setShowModal(true)}> */}
-          <TouchableOpacity onPress = {() => navigation.navigate("FormSecondScreen", { recipe: ""} )}>
+
+        </ScrollView>
+
+        <TouchableOpacity 
+          onPress = {() => navigation.navigate("FormSecondScreen", { recipe: ""} )}
+          style={{
+            borderWidth: 1,
+            borderColor: "rgba(0,0,0,0.2)",
+            alignItems: "center",
+            justifyContent: "center",
+            width: 70,
+            position: "absolute",
+            bottom: 10,
+            right: 10,
+            height: 70,
+            backgroundColor: "#01a699",
+            borderRadius: 100,
+          }}
+          
+          
+          >
               <View style={styles.addWrapper}>
                 <Text style={styles.addText}>+</Text>
               </View>
               
-            </TouchableOpacity>
+          </TouchableOpacity>
 
-        </ScrollView>
       </View>
     );
   }

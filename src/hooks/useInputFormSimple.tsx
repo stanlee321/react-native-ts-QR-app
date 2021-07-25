@@ -46,7 +46,15 @@ export const useInputFormSimple = ({ title, placeholder, keyboardType }: IGeneri
       >
         <View style={styles.buttomLineOverBoxTitle}>
           <Text style={styles.boxTitle}>{title}</Text>
-
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft:10,
+            }}
+          >
+            <FontAwesome name="pencil" color={"#444"} size={20} />
+          </View>
         </View>
         <View
           style={styles.inputsRow}
@@ -71,15 +79,7 @@ export const useInputFormSimple = ({ title, placeholder, keyboardType }: IGeneri
 
           </View>
 
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              marginLeft:10,
-            }}
-          >
-            <FontAwesome name="pencil" color={"#444"} size={32} />
-          </View>
+
         </View>
       </View>
     );
@@ -113,12 +113,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   bottomInputTextLine: {
+    flex:1,
     borderBottomColor: "black",
     borderBottomWidth: 1.4,
     marginBottom: 30,
     marginRight:40,
     marginLeft:10,
-    width: 140,
+    width: 200,
+    alignItems:'center',
   },
   dropDownSection: { 
     alignItems: "center",
@@ -127,6 +129,7 @@ const styles = StyleSheet.create({
   buttomLineOverBoxTitle:{
     borderBottomColor: "black",
     borderBottomWidth: 0.7,
+    flexDirection: 'row',
     marginLeft:15,
     marginRight:15,
     marginBottom: 5,

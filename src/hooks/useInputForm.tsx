@@ -29,11 +29,13 @@ interface IGenericInputForm {
   title: string;
   placeholder: string;
   // list of strings
+  keyboardType:  "numeric"  | "default" 
+
   dropDownData :  string[];
 }
 
 
-export const useInputForm = ({ title, placeholder, dropDownData }: IGenericInputForm) => {
+export const useInputForm = ({ title, placeholder, dropDownData, keyboardType }: IGenericInputForm) => {
 
   const [textInput, setTextInput] = useState<any>();
 
@@ -65,6 +67,7 @@ export const useInputForm = ({ title, placeholder, dropDownData }: IGenericInput
 
             >
               <TextInput
+                keyboardType={keyboardType}
                 placeholder={placeholder}
                 maxLength={20}
                 style={styles.input}

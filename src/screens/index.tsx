@@ -5,6 +5,8 @@ import Settings from "./Settings";
 import QRScanner from './QRScanner';
 import Form from './Form';
 import FormSecondScreen from './FormSecondScreen';
+import FormThirdScreen from './FormThirdScreen'
+
 
 export {
     Login,
@@ -13,5 +15,6 @@ export {
     Settings,
     QRScanner,
     Form,
-    FormSecondScreen
+    FormSecondScreen,
+    FormThirdScreen
 }

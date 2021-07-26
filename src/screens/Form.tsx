@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  SafeAreaView,
 } from "react-native";
 
 import useInput from "../hooks/useInput";
@@ -21,7 +22,8 @@ import ModalPopup from "../components/ModalPopup";
 import { FlatList } from "react-native-gesture-handler";
 import TrendingCard from "../components/TrendingCard";
 
-// Hooks 
+// Component
+import Header from "../components/Header";
 
 interface IImage {
   uri: string;
@@ -32,7 +34,6 @@ interface IImages {
 }
 
 const Form = ({ navigation }: any) => {
-
   // setTaskItems([...taskItems, task]);
 
   const [imageUrl, setImageUrl] = useState<any>(null);
@@ -64,59 +65,10 @@ const Form = ({ navigation }: any) => {
     }
 
     setActualImages({
-      data: [ { uri: imageUrl, id: 1 }],
+      data: [{ uri: imageUrl, id: 1 }],
     });
     setImageInView({ uri: imageUrl, id: 0 });
-
   }, [imageUrl]);
-
-
-  function renderModal(){
-    return(
-      <ModalPopup visible={showModal}>
-      <View
-        style={{
-          alignItems: "center",
-        }} >
-        <TouchableOpacity
-          style={styles.headerModal}
-          onPress={() => setShowModal(false)}
-        >
-          <Image
-            source={images.close}
-            style={{ height: 30, width: 30 }}
-          ></Image>
-        </TouchableOpacity>
-
-        <View style={{ alignItems: "center" }}>
-          <Image
-            source={images.ok}
-            style={{ height: 150, width: 150, marginVertical: 10 }}
-          />
-        </View>
-
-        <Text
-          style={{ marginVertical: 30, fontSize: 20, textAlign: "center" }}
-        >
-          {" "}
-          Datos enviados Correctamente!!!
-        </Text>
-      </View>
-    </ModalPopup>
-    )
-  }
-
-  function renderHeader() {
-    return (
-      <View style={styles.header}>
-        {/* Text */}
-        <View style={{ flex: 1 }}>
-          <Text style={styles.headerTextName}>Crear Item</Text>
-          <Text style={styles.headerTextSub}>Aqui puedes crear un item</Text>
-        </View>
-      </View>
-    );
-  }
 
   function drawTakePic() {
     return (
@@ -137,6 +89,30 @@ const Form = ({ navigation }: any) => {
     );
   }
 
+
+  function drawNextButton(){
+    return( <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("FormSecondScreen", { recipe: "" })
+      }
+      style={{
+        borderWidth: 1,
+        borderColor: "rgba(0,0,0,0.2)",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 70,
+        position: "absolute",
+        bottom: 10,
+        right: 10,
+        height: 70,
+        backgroundColor: "#01a699",
+        borderRadius: 100,
+      }}
+    >
+      {/* <Icon name="plus" size={30} color="#01a699" /> */}
+      <FontAwesome name="chevron-right" color={"white"} size={18} />
+    </TouchableOpacity>)
+  }
   function drawPicHeader() {
     return (
       <View
@@ -179,7 +155,6 @@ const Form = ({ navigation }: any) => {
       </View>
     );
   }
-  
 
   if (showCamera) {
     return (
@@ -191,119 +166,109 @@ const Form = ({ navigation }: any) => {
     );
   } else {
     return (
-      <View style={styles.container}>
-        {/* Modal */}
-        { renderModal() }
-        {/* Headers */}
-        {renderHeader()}
+      <SafeAreaView style={styles.area}>
+        <Header
+          title="Solicitud de Requerimiento"
+          datetime="2020 14 de Julio, 20:00 Hrs."
+          stateTitle="Paso 2 / 3"
+        />
+        <FlatList
+          data={[]}
+          keyExtractor={(item) => `${item.id}`}
+          keyboardDismissMode="on-drag"
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={
+            <View style={styles.container}>
+              {/* Modal */}
+              <View
+                style={{ flex: 1, alignItems: "center", paddingBottom: 20 }}
+              >
+                {drawPicHeader()}
 
-        <ScrollView
-          contentContainerStyle={{
-            marginBottom: 1,
-            paddingTop: 10,
-            paddingVertical: 100,
-          }}
-          keyboardShouldPersistTaps="handled"
-          style={{ flex: 1 }}
-        >
-          {/*  Pic Photo */}
+                {error ? <h1>ERROR trying to PIC, try again</h1> : <></>}
+              </View>
 
-          <View style={{ flex: 1, alignItems: "center", paddingBottom: 20 }}>
-            {drawPicHeader()}
+              {/* Horizontal Selection */}
 
-            {error ? <h1>ERROR trying to PIC, try again</h1> : <></>}
-          </View>
+              {actualImages ? (
+                <View>
+                  <FlatList
+                    data={actualImages.data}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item) => `${item.id}`}
+                    renderItem={({ item, index }) => {
+                      return (
+                        <TrendingCard
+                          containerStyle={{
+                            marginLeft: index == 0 ? SIZES.h1 : SIZES.h2,
+                            padding: 0,
+                          }}
+                          recipeItem={item}
+                          onPress={() =>
+                            setImageInView({ uri: item.uri, id: item.id })
+                          }
+                        />
+                      );
+                    }}
+                  />
+                </View>
+              ) : null}
 
-          {/* Horizontal Selection */}
-
-          {actualImages ? (
-            <View>
-              <FlatList
-                data={actualImages.data}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                keyExtractor={(item) => `${item.id}`}
-                renderItem={({ item, index }) => {
-                  return (
-                    <TrendingCard
-                      containerStyle={{
-                        marginLeft: index == 0 ? SIZES.h1 : SIZES.h2,
-                        padding: 0,
-                      }}
-                      recipeItem={item}
-                      onPress={() =>
-                        setImageInView({ uri: item.uri, id: item.id })
-                      }
-                    />
-                  );
+              {/* Horizontal Selection */}
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  padding: SIZES.radius,
+                  margin: 20,
                 }}
-              />
+              >
+                <Text style={{ paddingLeft: 50, fontSize: 30 }}>
+                  {/* Text */}
+                  N° 34
+                </Text>
+                <View
+                  style={{ flex: 1, flexDirection: "column", marginLeft: 40 }}
+                >
+                  <Text
+                    style={{
+                      paddingRight: 25,
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {/* Text */}
+                    Detalle
+                  </Text>
+                  <Text style={{ fontSize: 30 }}>
+                    {/* Text */}
+                    Cable Enchaquetado
+                  </Text>
+                </View>
+              </View>
+              <View style={{marginTop:40}}>
+                {drawNextButton()}
+
+              </View>
             </View>
-          ) : null}
-          
-          {/* Horizontal Selection */}
-          <View style={{
-            flex: 1,
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            padding: SIZES.radius,
-            margin: 20,
-            }}>
-              <Text style={{paddingLeft: 50, fontSize:30 }} >
-                {/* Text */}
-                N° 34
-              </Text>
-              <View style={{ flex:1 ,
-                flexDirection: "column" ,
-                marginLeft:40,
-                }}>
-                <Text  style={{
-                  paddingRight: 25,
-                  fontWeight: "bold"
-                  }}>
-                  {/* Text */}
-                  Detalle
-                </Text>
-                <Text  style={{ fontSize:30  }}>
-                  {/* Text */}
-                  Cable Enchaquetado
-                </Text>
-              </View>
-
-
-          </View>
-
-          
-          {/* <TouchableOpacity onPress={() => setShowModal(true)}> */}
-
-        </ScrollView>
-
-        <TouchableOpacity 
-          onPress = {() => navigation.navigate("FormSecondScreen", { recipe: ""} )}
-          style={{
-            borderWidth: 1,
-            borderColor: "rgba(0,0,0,0.2)",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 70,
-            position: "absolute",
-            bottom: 10,
-            right: 10,
-            height: 70,
-            backgroundColor: "#01a699",
-            borderRadius: 100,
+          }
+          renderItem={({ item }) => {
+            if (item) {
+              return null;
+            }
           }}
-          
-          
-          >
-              <View style={styles.addWrapper}>
-                <Text style={styles.addText}>+</Text>
-              </View>
-              
-          </TouchableOpacity>
+          // onPress={() => navigation.navigate("Recipe", { recipe: item })}
 
-      </View>
+          ListFooterComponent={
+            <View style={styles.footer}>
+
+            </View>
+          }
+        />
+        {/* <TouchableOpacity onPress={() => setShowModal(true)}> */}
+      </SafeAreaView>
     );
   }
 };
@@ -313,18 +278,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#E8EAED",
   },
-
-  addWrapper: {
-    width: 60,
-    height: 60,
-    backgroundColor: COLORS.darkGreen,
-    borderRadius: 120,
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "#C0C0C0",
-    borderWidth: 1,
+  area: {
+    flex: 1,
+    backgroundColor: COLORS.white,
   },
-  addText: { fontSize: 30 },
 
   buttonTakePic: {
     justifyContent: "center",
@@ -340,49 +297,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.transparentGray,
   },
 
-  // Hewader
-
-  // Header
-  header: {
-    flexDirection: "row",
-    marginHorizontal: SIZES.padding,
-    alignItems: "center",
-    height: 80,
-  },
-  headerTextName: {
-    color: COLORS.darkGreen,
-    fontSize: SIZES.h2,
-    lineHeight: 30,
-    fontWeight: "bold",
-  },
-  headerTextSub: {
-    marginTop: 3,
-    color: COLORS.gray,
-    fontSize: SIZES.body3,
-    lineHeight: 22,
-  },
-  headerProfileImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-  },
-  containerDropdown: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "#ecf0f1",
-    padding: 8,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  headerModal: {
-    width: "100%",
-    height: 40,
-    alignItems: "flex-end",
-    justifyContent: "center",
+  footer: {
+    marginBottom: 60,
+    marginTop: 20,
   },
 });
 

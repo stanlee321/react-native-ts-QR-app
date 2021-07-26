@@ -7,39 +7,40 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
-  Image
+  Image,
+  ScrollView,
 } from "react-native";
 
 // constants
 import { COLORS, images, SIZES } from "../../constants";
 
-
-
 // ICons
 // @ts-ignore
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
-
-
+import { Dimensions } from "react-native";
 
 interface IGenericInputForm {
   title: string;
   placeholder: string;
   // list of strings
-  keyboardType: "numeric"  | "default"
+  keyboardType: "numeric" | "default";
 }
 
-
-export const useInputFormSimple = ({ title, placeholder, keyboardType }: IGenericInputForm) => {
-
+export const useInputFormSimple = ({
+  title,
+  placeholder,
+  keyboardType,
+}: IGenericInputForm) => {
   const [textInput, setTextInput] = useState<any>();
 
-
-  const GenericInputForm = ( ) => {
+  function handleTextInput(text) {
+    setTextInput(text)
+  }
+  const GenericInputForm = () => {
     return (
       <View
         style={{
-          flex:1,
+          flex: 1,
           backgroundColor: "rgba(0, 0, 0, 0.09)",
           margin: 10,
         }}
@@ -50,53 +51,53 @@ export const useInputFormSimple = ({ title, placeholder, keyboardType }: IGeneri
             style={{
               justifyContent: "center",
               alignItems: "center",
-              marginLeft:10,
+              marginLeft: 10,
             }}
           >
             <FontAwesome name="pencil" color={"#444"} size={20} />
           </View>
         </View>
-        <View
-          style={styles.inputsRow}
-        >
-          <View
-            style={styles.bottomInputTextLine}
-          >
+        <View style={styles.inputsRow}>
+          <View style={styles.bottomInputTextLine}>
             <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
 
+            style={{
+              display: "flex",
+              flex: 1,
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              // height: Dimensions.get("window").height,
+              // width: Dimensions.get("window").width,
+            }}
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
+              
             >
-            <TextInput
-              placeholder={placeholder}
-              maxLength={20}
-              keyboardType={keyboardType}
-              style={styles.input}
-              onChangeText={setTextInput}
-              value={textInput}
-            />
 
+              <TextInput
+                placeholder={placeholder}
+                maxLength={20}
+                keyboardType={keyboardType}
+                style={styles.input}
+                onChangeText={handleTextInput}
+                value={textInput}
+              />
             </KeyboardAvoidingView>
-
           </View>
-
-
         </View>
       </View>
     );
-  }
+  };
 
   return [textInput, GenericInputForm];
 };
 
 const styles = StyleSheet.create({
-
-
   input: {
     height: 40,
     marginLeft: 12,
     marginRight: 12,
     marginBottom: 1,
-    marginTop:12,
+    marginTop: 12,
     fontSize: SIZES.h2,
     // borderWidth: 1,
   },
@@ -113,26 +114,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
   },
   bottomInputTextLine: {
-    flex:1,
     borderBottomColor: "black",
     borderBottomWidth: 1.4,
     marginBottom: 30,
-    marginRight:40,
-    marginLeft:10,
-    width: 200,
-    alignItems:'center',
-  },
-  dropDownSection: { 
+    marginRight: 40,
+    marginLeft: 10,
+    width: 100,
     alignItems: "center",
-    justifyContent: "center"
   },
-  buttomLineOverBoxTitle:{
+  dropDownSection: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttomLineOverBoxTitle: {
     borderBottomColor: "black",
     borderBottomWidth: 0.7,
-    flexDirection: 'row',
-    marginLeft:15,
-    marginRight:15,
+    flexDirection: "row",
+    marginLeft: 15,
+    marginRight: 15,
     marginBottom: 5,
-}
+  },
 });
-

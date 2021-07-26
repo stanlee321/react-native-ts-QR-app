@@ -7,32 +7,23 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
-  
 } from "react-native";
 
-import {
-  COLORS,
-  SIZES,
-
-} from "../../constants";
+import { COLORS, SIZES } from "../../constants";
 
 // @ts-ignore
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-
 
 // Custom Hooks
 import { useInputForm } from "../hooks/useInputForm";
 import { useInputFormSimple } from "../hooks/useInputFormSimple";
 
-
 // Custom Components Library
 import { FlatList } from "react-native-gesture-handler";
 
-
 // Component
 
-import Header from '../components/Header';
-
+import Header from "../components/Header";
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"];
 
@@ -41,31 +32,28 @@ const FormSecondScreen = ({ navigation }: any) => {
     title: "Material 🗜️",
     placeholder: "Escriba el material...",
     dropDownData: countries,
-    keyboardType: "default"
+    keyboardType: "default",
   });
 
   const [textMedida, MedidaInputForm] = useInputForm({
     title: "Medida 📐",
     placeholder: "Escriba la medida...",
     dropDownData: countries,
-    keyboardType: "default"
-
+    keyboardType: "default",
   });
 
   const [textMarca, MarcaInputForm] = useInputForm({
     title: "Marca ℹ️",
     placeholder: "Escriba la marca...",
     dropDownData: countries,
-    keyboardType: "default"
-
+    keyboardType: "default",
   });
 
   const [textDestino, DestinoInputForm] = useInputForm({
     title: "Destino 🛣️",
     placeholder: "Escriba el destino...",
     dropDownData: countries,
-    keyboardType: "default"
-
+    keyboardType: "default",
   });
 
   const [textSection, SectionInputForm] = useInputFormSimple({
@@ -86,52 +74,58 @@ const FormSecondScreen = ({ navigation }: any) => {
     keyboardType: "default",
   });
 
+  function drawBody() {
+    return (
+      <View style={{ flex: 1, backgroundColor: "#fff" }}>
+        {/* <Image
+      source={images.newLoginBackground}
+      style={StyleSheet.absoluteFillObject}
+    /> */}
 
+        {/* Render Inputs */}
+
+        {/*  material Input */}
+        <MaterialInputForm />
+
+        {/* medida Input */}
+        <MedidaInputForm />
+
+        {/* marca Input */}
+        <MarcaInputForm />
+
+        {/* destino Input */}
+        <DestinoInputForm />
+
+        {/* Cantidad Section */}
+
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "space-around",
+            flexDirection: "row",
+          }}
+        >
+          <CantidadInputForm />
+          <UnidadInputForm />
+        </View>
+        {/* section Input */}
+        <SectionInputForm />
+      </View>
+    );
+  }
   return (
     <SafeAreaView style={styles.area}>
-      <Header title = "Solicitud de Requerimiento" datetime="2020 14 de Julio, 20:00 Hrs." stateTitle="Paso 2 / 3"/>
+      <Header
+        title="Solicitud de Requerimiento"
+        datetime="2020 14 de Julio, 20:00 Hrs."
+        stateTitle="Paso 2 / 3"
+      />
       <FlatList
         data={[]}
         keyExtractor={(item) => `${item.id}`}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={
-          <View style={{ flex: 1, backgroundColor: "#fff" }}>
-            {/* <Image
-              source={images.newLoginBackground}
-              style={StyleSheet.absoluteFillObject}
-            /> */}
-
-            {/* Render Inputs */}
-
-            {/*  material Input */}
-            <MaterialInputForm />
-
-            {/* medida Input */}
-            <MedidaInputForm />
-
-            {/* marca Input */}
-            <MarcaInputForm />
-
-            {/* destino Input */}
-            <DestinoInputForm />
-
-            {/* Cantidad Section */}
-
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "space-around",
-                flexDirection: "row",
-              }}
-            >
-              <CantidadInputForm />
-              <UnidadInputForm />
-            </View>
-            {/* section Input */}
-            <SectionInputForm />
-          </View>
-        }
+        ListHeaderComponent={ drawBody }
         renderItem={({ item }) => {
           if (item) {
             return null;
@@ -143,9 +137,7 @@ const FormSecondScreen = ({ navigation }: any) => {
       />
       {/* <TouchableOpacity onPress={() => setShowModal(true)}> */}
       <TouchableOpacity
-
-      onPress = {() => navigation.navigate("FormThirdScreen", { recipe: ""} )}
-
+        onPress={() => navigation.navigate("FormThirdScreen", { recipe: "" })}
         style={{
           borderWidth: 1,
           borderColor: "rgba(0,0,0,0.2)",
@@ -162,7 +154,6 @@ const FormSecondScreen = ({ navigation }: any) => {
       >
         {/* <Icon name="plus" size={30} color="#01a699" /> */}
         <FontAwesome name="chevron-right" color={"white"} size={18} />
-
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -181,7 +172,6 @@ const styles = StyleSheet.create({
   footer: {
     marginBottom: 20,
   },
-
 
   addWrapper: {
     width: 60,

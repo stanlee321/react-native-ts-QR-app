@@ -15,32 +15,33 @@ import {
 // constants
 import { COLORS, SIZES } from "../../constants";
 
-
 import SelectDropdown from "react-native-select-dropdown";
 
 // ICons
 // @ts-ignore
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-
-
-
 interface IGenericInputForm {
   title: string;
   placeholder: string;
   // list of strings
-  keyboardType:  "numeric"  | "default" 
+  keyboardType: "numeric" | "default";
 
-  dropDownData :  string[];
+  dropDownData: string[];
 }
 
-
-export const useInputForm = ({ title, placeholder, dropDownData, keyboardType }: IGenericInputForm) => {
-
+export const useInputForm = ({
+  title,
+  placeholder,
+  dropDownData,
+  keyboardType,
+}: IGenericInputForm) => {
   const [textInput, setTextInput] = useState<any>();
 
-
-  const GenericInputForm = ( ) => {
+  function handleInputChange(text){
+    setTextInput(text);
+  }
+  const GenericInputForm = () => {
     return (
       <View
         style={{
@@ -54,28 +55,27 @@ export const useInputForm = ({ title, placeholder, dropDownData, keyboardType }:
       >
         <View style={styles.buttomLineOverBoxTitle}>
           <Text style={styles.boxTitle}>{title}</Text>
-
         </View>
-        <View
-          style={styles.inputsRow}
-        >
-          <View
-            style={styles.bottomInputTextLine}
-          >
+        <View style={styles.inputsRow}>
+          <View style={styles.bottomInputTextLine}>
             <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-
+              behavior={Platform.OS === "ios" ? "padding" : "height"}
             >
-              <TextInput
-                keyboardType={keyboardType}
-                placeholder={placeholder}
-                maxLength={20}
-                style={styles.input}
-                onChangeText={setTextInput}
-                value={textInput}
-              />
-            </KeyboardAvoidingView>
+              <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps="handled"
+              >
+                <TextInput
+                  keyboardType={keyboardType}
+                  placeholder={placeholder}
+                  maxLength={20}
+                  style={styles.input}
+                  onChangeText={ handleInputChange }
+                  value={textInput}
 
+                />
+              </ScrollView>
+            </KeyboardAvoidingView>
           </View>
 
           <View style={styles.dropDownSection}>
@@ -95,7 +95,6 @@ export const useInputForm = ({ title, placeholder, dropDownData, keyboardType }:
                   <FontAwesome name="chevron-down" color={"#444"} size={18} />
                 );
               }}
-              
               rowTextForSelection={(item, index) => {
                 // text represented for each item in dropdown
                 // if data array is an array of objects then return item.property to represent item in dropdown
@@ -115,20 +114,18 @@ export const useInputForm = ({ title, placeholder, dropDownData, keyboardType }:
         </View>
       </View>
     );
-  }
+  };
 
   return [textInput, GenericInputForm];
 };
 
 const styles = StyleSheet.create({
-
-
   input: {
     height: 40,
     marginLeft: 12,
     marginRight: 12,
     marginBottom: 1,
-    marginTop:12,
+    marginTop: 12,
     fontSize: SIZES.h3,
     // borderWidth: 1,
   },
@@ -142,7 +139,6 @@ const styles = StyleSheet.create({
   },
 
   boxTitle: {
-    
     marginTop: 10,
     fontSize: SIZES.h3,
     color: COLORS.black,
@@ -160,16 +156,15 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     width: 170,
   },
-  dropDownSection: { 
+  dropDownSection: {
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
-  buttomLineOverBoxTitle:{
+  buttomLineOverBoxTitle: {
     borderBottomColor: "black",
     borderBottomWidth: 0.7,
-    marginLeft:15,
-    marginRight:15,
+    marginLeft: 15,
+    marginRight: 15,
     marginBottom: 5,
-}
+  },
 });
-

@@ -7,6 +7,7 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  Animated
 } from "react-native";
 
 import { COLORS, SIZES } from "../../constants";
@@ -28,6 +29,10 @@ import Header from "../components/Header";
 const countries = ["Egypt", "Canada", "Australia", "Ireland"];
 
 const FormSecondScreen = ({ navigation }: any) => {
+
+
+  const scrollY = React.useRef(new Animated.Value(0)).current;
+
   const [textMaterial, MaterialInputForm] = useInputForm({
     title: "Material 🗜️",
     placeholder: "Escriba el material...",
@@ -76,7 +81,7 @@ const FormSecondScreen = ({ navigation }: any) => {
 
   function drawBody() {
     return (
-      <View style={{ flex: 1, backgroundColor: "#fff" }}>
+      <View style={{ flex: 1, marginTop:100, backgroundColor: "#fff" }}>
         {/* <Image
       source={images.newLoginBackground}
       style={StyleSheet.absoluteFillObject}
@@ -114,18 +119,20 @@ const FormSecondScreen = ({ navigation }: any) => {
     );
   }
   return (
-    <SafeAreaView style={styles.area}>
-      <Header
-        title="Solicitud de Requerimiento"
-        datetime="2020 14 de Julio, 20:00 Hrs."
-        stateTitle="Paso 2 / 3"
-      />
-      <FlatList
+    <View style={styles.area}>
+
+      <Animated.FlatList
         data={[]}
         keyExtractor={(item) => `${item.id}`}
         keyboardDismissMode="on-drag"
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={ drawBody }
+        scrollEventThrottle={16}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: true }
+        )}
+
         renderItem={({ item }) => {
           if (item) {
             return null;
@@ -155,7 +162,13 @@ const FormSecondScreen = ({ navigation }: any) => {
         {/* <Icon name="plus" size={30} color="#01a699" /> */}
         <FontAwesome name="chevron-right" color={"white"} size={18} />
       </TouchableOpacity>
-    </SafeAreaView>
+      <Header
+        title="Solicitud de Requerimiento"
+        datetime="2020 14 de Julio, 20:00 Hrs."
+        stateTitle="Paso 2 / 3"
+        navigation={navigation}
+      />
+    </View>
   );
 };
 
@@ -168,6 +181,7 @@ const styles = StyleSheet.create({
   area: {
     flex: 1,
     backgroundColor: COLORS.white,
+    
   },
   footer: {
     marginBottom: 20,

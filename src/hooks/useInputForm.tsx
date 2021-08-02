@@ -36,11 +36,19 @@ export const useInputForm = ({
   dropDownData,
   keyboardType,
 }: IGenericInputForm) => {
-  const [textInput, setTextInput] = useState<any>();
 
-  function handleInputChange(text){
-    setTextInput(text);
-  }
+  const [textInput, setTextInput] = useState<any>();
+  const [textDisable, setTextDisable] = useState<any>(true);
+
+  React.useCallback(()=>{
+
+    setTextInput
+
+  },
+  [setTextInput])
+
+
+
   const GenericInputForm = () => {
     return (
       <View
@@ -57,24 +65,30 @@ export const useInputForm = ({
           <Text style={styles.boxTitle}>{title}</Text>
         </View>
         <View style={styles.inputsRow}>
-          <View style={styles.bottomInputTextLine}>
+          <View style={styles.bottomInputTextLine} >
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : "height"}
             >
-              <ScrollView
+              {/* <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 keyboardShouldPersistTaps="handled"
+                
               >
-                <TextInput
+
+              </ScrollView> */}
+              <TextInput
+                // autoFocus={true}
+                  // editable={textDisable}
                   keyboardType={keyboardType}
                   placeholder={placeholder}
                   maxLength={20}
                   style={styles.input}
-                  onChangeText={ handleInputChange }
+                  onEndEditing={(e) => {setTextInput(e.nativeEvent.text)}}
+                 // onChangeText={ (text) => {} }
                   value={textInput}
+                  // onEndEditing={() => setTextDisable(false)} 
 
                 />
-              </ScrollView>
             </KeyboardAvoidingView>
           </View>
 

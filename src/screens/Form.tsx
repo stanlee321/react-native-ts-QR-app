@@ -8,11 +8,12 @@ import {
   TouchableOpacity,
   Image,
   SafeAreaView,
+  Animated
 } from "react-native";
 
 import useInput from "../hooks/useInput";
 
-import { SIZES, COLORS, images, dummyData } from "../../constants";
+import { SIZES, COLORS, images, dummyData, icons, FONTS } from "../../constants";
 
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -24,6 +25,9 @@ import TrendingCard from "../components/TrendingCard";
 
 // Component
 import Header from "../components/Header";
+
+
+
 
 interface IImage {
   uri: string;
@@ -166,13 +170,9 @@ const Form = ({ navigation }: any) => {
     );
   } else {
     return (
-      <SafeAreaView style={styles.area}>
-        <Header
-          title="Solicitud de Requerimiento"
-          datetime="2020 14 de Julio, 20:00 Hrs."
-          stateTitle="Paso 2 / 3"
-        />
-        <FlatList
+      <View style={styles.area}>
+  
+        <Animated.FlatList
           data={[]}
           keyExtractor={(item) => `${item.id}`}
           keyboardDismissMode="on-drag"
@@ -268,7 +268,14 @@ const Form = ({ navigation }: any) => {
           }
         />
         {/* <TouchableOpacity onPress={() => setShowModal(true)}> */}
-      </SafeAreaView>
+        <Header
+          title="Solicitud de Requerimiento"
+          datetime="2020 14 de Julio, 20:00 Hrs."
+          stateTitle="Paso 2 / 3"
+          navigation={navigation}
+        />
+
+      </View>
     );
   }
 };

@@ -6,7 +6,8 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
-  Image
+  Image,
+  Animated
 } from "react-native";
 
 // Component
@@ -97,14 +98,10 @@ const FormThirdScreen = ({ navigation }: any) => {
   }
 
   return (
-    <SafeAreaView style={styles.area}>
+    <View style={styles.area}>
       {renderModal()}
-      <Header
-        title="Solicitud de Requerimiento"
-        datetime="2020 14 de Julio, 20:00 Hrs."
-        stateTitle="Paso 3 / 3"
-      />
-      <FlatList
+
+      <Animated.FlatList
         data={[]}
         keyExtractor={(item) => `${item.id}`}
         keyboardDismissMode="on-drag"
@@ -175,7 +172,13 @@ const FormThirdScreen = ({ navigation }: any) => {
         {/* <Icon name="plus" size={30} color="#01a699" /> */}
         <FontAwesome name="chevron-right" color={"white"} size={18} />
       </TouchableOpacity>
-    </SafeAreaView>
+      <Header
+          title="Solicitud de Requerimiento"
+          datetime="2020 14 de Julio, 20:00 Hrs."
+          stateTitle="Paso 2 / 3"
+          navigation={navigation}
+        />
+    </View>
   );
 };
 

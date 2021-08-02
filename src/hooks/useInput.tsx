@@ -25,11 +25,6 @@ const useInput = ({
 }: any) => {
   const [text, setText] = useState<any>();
 
-
-  function handleInput(text){
-    setText(text);
-  
-  }
   const inputComponent = () => {
     return (
       <View
@@ -67,7 +62,7 @@ const useInput = ({
                 placeholder={"Write a task"}
                 value={text}
                 keyboardType={type}
-                onChangeText={handleInput}
+                onEndEditing={(e) => {setText(e.nativeEvent.text)}}
 
               />
             </ScrollView>

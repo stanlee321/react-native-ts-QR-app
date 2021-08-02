@@ -78,7 +78,7 @@ export const useInputFormSimple = ({
                 maxLength={20}
                 keyboardType={keyboardType}
                 style={styles.input}
-                onChangeText={handleTextInput}
+                onEndEditing={(e) => {setTextInput(e.nativeEvent.text)}}
                 value={textInput}
               />
             </KeyboardAvoidingView>
